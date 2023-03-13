@@ -32,8 +32,7 @@ public class DemoCRUDPeUsers {
 
             switch (i) {
                 case 1:
-                    User u = new User();
-                    u = obiect.ReadFromKeyboard(u, i, n);
+                    User u = obiect.ReadFromKeyboard(i, n);
                     boolean isAdded = obiect.insert(u);
                     System.out.println(isAdded ? "S-a inserat inregistrarea!" : "Nu s-a putut efectua inserarea!");
                     break;
@@ -42,15 +41,13 @@ public class DemoCRUDPeUsers {
                     System.out.println(result);
                     break;
                 case 3:
-                    u = new User();
                     n = "New";
-                    u = obiect.ReadFromKeyboard(u, i, n);
+                    u = obiect.ReadFromKeyboard(i, n);
                     boolean ex = obiect.update(u);
                     System.out.println(ex);
                     break;
                 case 4:
-                    u = new User();
-                    u = obiect.ReadFromKeyboard(u, i, n);
+                    u = obiect.ReadFromKeyboard(i, n);
                     boolean rasp = obiect.delete(u);
                     System.out.println(rasp);
                     break;
@@ -138,10 +135,10 @@ public class DemoCRUDPeUsers {
             pSt.setString(1, u.getUsername());
 
             int val = 0; // returneaza 1 daca a reusit sa stearga randul
+                        // sau returneaza 0, daca  nu a reusit sa stearga
 
             try {
                 val = pSt.executeUpdate();
-                // sau returneaza 0, daca  nu a reusit sa stearga
             } catch (SQLException e) {
                 System.out.println("Acest username mai exista si in alt tabel!");
             }
@@ -153,7 +150,8 @@ public class DemoCRUDPeUsers {
             return ok;
         }
 
-        private User ReadFromKeyboard (User u, int i, String n) {
+        private User ReadFromKeyboard (int i, String n) {
+            User u = new User();
             System.out.print("Username: ");
             String us = new Scanner(System.in).nextLine();
             u.setUsername(us);
